@@ -1,6 +1,7 @@
 import React from 'react';
 import Expense from './components/Expenses/Expense';
 import NewExpense from './components/NewExpense/NewExpense';
+import { logDOM } from '@testing-library/react';
 
 function App() {
   const expenses = [
@@ -25,9 +26,11 @@ function App() {
     },
   ];
 
+  const addExpenseHandler = (expense) => console.log('In App.js', expense);
+
   return (
     <div>
-      <NewExpense />
+      <NewExpense onAddExpense={addExpenseHandler} />
       <Expense items={expenses} />
     </div>
   );
