@@ -1,10 +1,9 @@
-import React from 'react';
+import React, { useState } from 'react';
 import Expense from './components/Expenses/Expense';
 import NewExpense from './components/NewExpense/NewExpense';
-import { logDOM } from '@testing-library/react';
 
 function App() {
-  const expenses = [
+  const DUMMY_EXPENSES = [
     {
       id: 'e1',
       title: 'Toilet Paper',
@@ -26,7 +25,12 @@ function App() {
     },
   ];
 
-  const addExpenseHandler = (expense) => console.log('In App.js', expense);
+  const [expenses, setExpenses] = useState(DUMMY_EXPENSES);
+  const addExpenseHandler = (newExpenseData) => {
+    setExpenses((prevExpenses) => {
+      return [newExpenseData, ...prevExpenses]; // 이전 스냅샷 기반
+    });
+  };
 
   return (
     <div>
