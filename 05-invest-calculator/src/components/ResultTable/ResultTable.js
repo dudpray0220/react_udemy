@@ -2,18 +2,32 @@ import React from 'react';
 import styles from './ResultTable.module.css';
 
 const ResultTable = (props) => {
-  if (props.result.length === 0) {
-    return <p>No result</p>;
-  }
+  const formatter = new Intl.NumberFormat('en-US', {
+    style: 'currency',
+    currency: 'USD',
+    minimumFractionDigits: 2,
+    maximumFractionDigits: 2,
+  });
 
-  let resultData = props.result.map((year) => {
+  let resultData = props.data.map((yearData) => {
     return (
-      <tr key={year.year}>
-        <td>{year.year}</td>
-        <td>{year.savingsEndOfYear}</td>
-        <td>{year.yearlyInterest}</td>
-        <td>{year.yearlyContribution}</td>
-        <td>{year.yearlyContribution + year.yearlyInterest}</td>
+      <tr key={yearData.year}>
+        <td>{yearData.year}</td>
+        <td>{formatter.format(yearData.savingsEndOfYear)}</td>
+        <td>{formatter.format(yearData.yearlyInterest)}</td>
+        <td>
+          {formatter.format(
+            yearData.savingsEndOfYear -
+              props.initialInvestment -
+              yearData.yearlyContribution * yearData.year,
+          )}
+        </td>
+        <td>
+          {formatter.format(
+            props.initialInvestment +
+              yearData.yearlyContribution * yearData.year,
+          )}
+        </td>
       </tr>
     );
   });

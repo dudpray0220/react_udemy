@@ -2,32 +2,35 @@ import React, { useState } from 'react';
 import styles from './InputForm.module.css';
 
 const InputForm = (props) => {
-  const [formData, setFormData] = useState({
-    'current-savings': '',
-    'yearly-contribution': '',
-    'expected-return': '',
-    duration: '',
-  });
+  const initialUserInput = {
+    'current-savings': 10000,
+    'yearly-contribution': 1200,
+    'expected-return': 7,
+    duration: 10,
+  };
 
-  const changeInputHandler = (event) => {
-    const { id, value } = event.target; // 구조 분해 할당
-    setFormData((prevState) => {
-      return { ...prevState, [id]: value }; // 객체 key에 -이 들어가서 [] 감싸줌.
+  const [userInput, setUserInput] = useState(initialUserInput);
+
+  // const changeInputHandler = (event) => {
+  //   const { id, value } = event.target; // 구조 분해 할당
+  //   setFormData((prevState) => {
+  //     return { ...prevState, [id]: value }; //
+  //   });
+  // };
+
+  const changeInputHandler = (input, value) => {
+    setUserInput((prevInput) => {
+      return { ...prevInput, [input]: +value }; // 객체 key 에 -이 들어가서 [] 감싸줌.
     });
   };
 
   const clickResetHandler = () => {
-    setFormData({
-      'current-savings': '',
-      'yearly-contribution': '',
-      'expected-return': '',
-      duration: '',
-    });
+    setUserInput(initialUserInput);
   };
 
   const clickSubmitHandler = (event) => {
     event.preventDefault();
-    props.onSubmitData(formData);
+    props.onCalculate(userInput);
   };
 
   return (
@@ -38,8 +41,10 @@ const InputForm = (props) => {
           <input
             type="number"
             id="current-savings"
-            value={formData['current-savings']}
-            onChange={changeInputHandler}
+            value={userInput['current-savings']}
+            onChange={(event) => {
+              changeInputHandler('current-savings', event.target.value);
+            }}
           />
         </p>
         <p>
@@ -47,8 +52,10 @@ const InputForm = (props) => {
           <input
             type="number"
             id="yearly-contribution"
-            value={formData['yearly-contribution']}
-            onChange={changeInputHandler}
+            value={userInput['yearly-contribution']}
+            onChange={(event) => {
+              changeInputHandler('yearly-contribution', event.target.value);
+            }}
           />
         </p>
       </div>
@@ -60,8 +67,10 @@ const InputForm = (props) => {
           <input
             type="number"
             id="expected-return"
-            value={formData['expected-return']}
-            onChange={changeInputHandler}
+            value={userInput['expected-return']}
+            onChange={(event) => {
+              changeInputHandler('expected-return', event.target.value);
+            }}
           />
         </p>
         <p>
@@ -69,8 +78,10 @@ const InputForm = (props) => {
           <input
             type="number"
             id="duration"
-            value={formData.duration}
-            onChange={changeInputHandler}
+            value={userInput['duration']}
+            onChange={(event) => {
+              changeInputHandler('duration', event.target.value);
+            }}
           />
         </p>
       </div>
