@@ -4,6 +4,7 @@ import NewExpense from './components/NewExpense/NewExpense';
 
 function App() {
   const DUMMY_EXPENSES = [
+    // commit test
     {
       id: 'e1',
       title: 'Toilet Paper',
