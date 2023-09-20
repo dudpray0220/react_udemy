@@ -1,0 +1,4 @@
+# .gitignore for a React project
+node_modules/
+build/
+.env
